@@ -46,17 +46,18 @@ def cookie_task():
 		response.set_cookie('username', name)
 		response.set_cookie('email', email)
 		return response
-	else:
-		response = make_response(render_template("registry.html"))
-		response.delete_cookie('username')
-		response.delete_cookie('email')
-		return response
+	return render_template("registry.html")
 
 
 @app.route('/hello/', methods=['POST', 'GET'])
 def hello():
 	name = request.cookies.get('username')
 	context = {'name': name}
+	if request.method == 'POST':
+		response = make_response(redirect(url_for('cookie_task')))
+		response.delete_cookie('username')
+		response.delete_cookie('email')
+		return response
 	return render_template('hello.html', **context)
 
 
