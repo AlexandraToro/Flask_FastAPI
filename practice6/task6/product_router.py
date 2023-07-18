@@ -4,21 +4,16 @@ from models import Product, ProductIn
 
 router = APIRouter()
 
-@router.get("/goods/{amt}")
-async def create_goods(amt: int):
-	for i in range(1, amt + 1):
-		query = products.insert().values(name=f'a_good{i}',
-		                               description=f'=={i ** 4}=='
-		                                           f'Lorem  ipsum  dolor  sit amet, '
-		                                           f'consectetur  adipiscing  elit. '
-		                                           f'Vestibulum    sagittis   dolor '
-		                                           f'mauris,  at  elementum  ligula '
-		                                           f'tempor  eget.'
-		                                           f'=={i ** 4}==',
-		                               price=round(i ** 2 / (i * 2) + i ** 2 / i ** 3, 2),
-		                               )
-		await database.execute(query)
-	return {'message': f'{amt} fake goods created'}
+# for create testing data
+# @router.get("/products/{count}")
+# async def create_testing_data_product(count: int):
+# 	for i in range(1, count + 1):
+# 		query = products.insert().values(name=f'Product{i}',
+# 		                                 description='Description for {i ** 2}',
+# 		                                 price=round(i ** 4 / (i * 2), 2),
+# 		                                 )
+# 		await database.execute(query)
+# 	return {'message': 'Done'}
 
 
 @router.post("/products/", response_model=Product)
